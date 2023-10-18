@@ -52,7 +52,7 @@ export default function LandingPageNavbar() {
             {user.user === undefined && <p>Loading...</p>}
             <div>
               {!user.user ? (
-                <SignInButton mode="modal" afterSignInUrl="/home">
+                <SignInButton mode="modal">
                   <Button variant={"purple"}>Giriş Yap</Button>
                 </SignInButton>
               ) : (
