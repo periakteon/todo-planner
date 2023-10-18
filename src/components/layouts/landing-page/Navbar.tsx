@@ -13,8 +13,8 @@ export default function LandingPageNavbar() {
   const { resolvedTheme } = theme;
 
   const menus = [
-    { title: "Home", path: "/" },
-    { title: "Todo Page", path: "/home" },
+    { title: "Anasayfa", path: "/" },
+    { title: "Todo Sayfası", path: "/home" },
   ];
   1;
 

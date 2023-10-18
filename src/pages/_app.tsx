@@ -1,4 +1,3 @@
-import { type AppType } from "next/app";
 import { api } from "@/utils/api";
 import "@/styles/globals.css";
 import NextNProgress from "nextjs-progressbar";
@@ -13,7 +12,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     <ClerkProvider {...pageProps}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <NextNProgress
-          color="#1d4ed8q"
+          color="#9333ea"
           startPosition={0.3}
           stopDelayMs={200}
           height={5}
