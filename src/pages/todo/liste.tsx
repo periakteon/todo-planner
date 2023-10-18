@@ -7,15 +7,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const TodoHome: MyPage = () => {
+const TodoList: MyPage = () => {
   return (
     <>
       <div className="p-4 sm:ml-64">
         <Card className="mt-16 rounded-lg p-0">
           <CardHeader>
-            <CardTitle>Dashboard</CardTitle>
+            <CardTitle>To-Do Listesi</CardTitle>
             <CardDescription>
-              Aşağıda uygulamaya ait genel istatistiklerinizi görebilirsiniz.
+              Aşağıda eklemiş olduğunuz To-Do&rsquo;ların listesini
+              görebilirsiniz.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -27,5 +28,5 @@ const TodoHome: MyPage = () => {
   );
 };
 
-export default TodoHome;
-TodoHome.Layout = "TodoPage";
+export default TodoList;
+TodoList.Layout = "TodoPage";

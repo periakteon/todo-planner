@@ -42,7 +42,7 @@ export default function Footer() {
           <Link href="https://periakteon.me/" className="hover:underline">
             Masum Gökyüz
           </Link>
-          . Tüm hakları saklıdır.
+          . Tüm hakları saklıdır. VisioSoft için hazırlanmıştır.
         </span>
       </div>
     </footer>
