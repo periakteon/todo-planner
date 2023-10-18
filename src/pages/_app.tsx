@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     <ClerkProvider {...pageProps}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <NextNProgress
-          color="#17b019"
+          color="#1d4ed8q"
           startPosition={0.3}
           stopDelayMs={200}
           height={5}
