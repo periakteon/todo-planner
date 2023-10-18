@@ -50,13 +50,15 @@ export default function LandingPageNavbar() {
             ))}
             <ModeToggle />
             {user.user === undefined && <p>Loading...</p>}
-            {!user.user ? (
-              <SignInButton mode="modal" afterSignInUrl="/home">
-                <Button variant={"purple"}>Giriş Yap</Button>
-              </SignInButton>
-            ) : (
-              <UserButton afterSignOutUrl="/" />
-            )}
+            <div>
+              {!user.user ? (
+                <SignInButton mode="modal" afterSignInUrl="/home">
+                  <Button variant={"purple"}>Giriş Yap</Button>
+                </SignInButton>
+              ) : (
+                <UserButton afterSignOutUrl="/" />
+              )}
+            </div>
           </ul>
         </div>
       </div>
