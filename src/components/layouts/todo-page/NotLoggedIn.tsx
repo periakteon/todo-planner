@@ -1,26 +1,45 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { SignInButton } from "@clerk/nextjs";
-import { AlertCircle } from "lucide-react";
+import { ArrowLeftCircle, ShieldAlert } from "lucide-react";
+import { useRouter } from "next/router";
 
 export default function NotLoggedIn() {
+  const router = useRouter();
   return (
-    <Alert
-      variant="destructive"
-      className="mx-auto mt-10 h-full w-2/3 sm:w-2/3 md:w-1/3"
+    <div
+      className="
+  flex
+  h-screen
+  w-screen
+  items-center
+  justify-center
+  bg-gradient-to-r
+  from-indigo-600
+  to-purple-500
+"
     >
-      <AlertCircle className="h-6 w-6" />
-      <AlertTitle className="ml-2">HATA</AlertTitle>
-      <AlertDescription className="ml-2">
-        Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.
-      </AlertDescription>
-      <div className="mt-4 flex justify-center">
-        <SignInButton mode="modal" afterSignInUrl="/home">
-          <Button className="bg-green-600 hover:bg-green-500 dark:bg-green-700 dark:hover:bg-green-600">
-            Giriş Yap
-          </Button>
-        </SignInButton>
+      <div className="relative rounded-md bg-white px-20 py-20 shadow-xl">
+        <ArrowLeftCircle
+          className="absolute left-4 top-4 cursor-pointer text-gray-400 hover:text-gray-300"
+          size={36}
+          onClick={() => void router.back()}
+        />
+        <div className="flex flex-col items-center">
+          <ShieldAlert color="red" size={100} />
+
+          <h6 className="mb-2 text-center text-2xl font-bold text-gray-800 md:text-3xl">
+            <span className="text-red-500">UYARI</span>
+          </h6>
+
+          <p className="mb-8 text-center text-gray-500 md:text-lg">
+            Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.
+          </p>
+
+          <SignInButton mode="modal" afterSignInUrl="/home">
+            <Button variant={"purple"}>Giriş Yap</Button>
+          </SignInButton>
+        </div>
       </div>
-    </Alert>
+    </div>
   );
 }
