@@ -5,12 +5,18 @@ import { type MyAppProps } from "@/components/layouts/types";
 import { Layouts } from "@/components/layouts/Layouts";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { useHasMounted } from "@/hooks/useHasMounted";
 
 function MyApp({ Component, pageProps }: MyAppProps) {
   const Layout = Layouts[Component.Layout] ?? ((page) => page);
+  const hasMounted = useHasMounted();
+
+  if (!hasMounted) {
+    return null;
+  }
   return (
     <ClerkProvider {...pageProps}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="dark">
         <NextNProgress
           color="#9333ea"
           startPosition={0.3}

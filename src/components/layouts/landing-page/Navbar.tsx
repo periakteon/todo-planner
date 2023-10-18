@@ -19,11 +19,17 @@ export default function LandingPageNavbar() {
   1;
 
   return (
-    <nav className="w-full border-b-4 border-purple-700 bg-white dark:bg-slate-900">
+    <nav className="sticky top-0 z-50 w-full border-b-2 border-purple-700 bg-white/90 backdrop-blur-sm dark:bg-slate-900/90">
       <div className="mx-auto max-w-screen-xl items-center px-4 md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:block md:py-5">
           <Link href="/">
-            <h1 className={`text-3xl font-bold text-purple-600`}>TODO:APP</h1>
+            <h1
+              className={`text-3xl font-bold ${
+                resolvedTheme === "dark" ? "text-purple-500" : "text-purple-600"
+              }`}
+            >
+              TODO:APP
+            </h1>
           </Link>
           <div className="md:hidden">
             <button
@@ -48,7 +54,6 @@ export default function LandingPageNavbar() {
                 <Link href={item.path}>{item.title}</Link>
               </li>
             ))}
-            <ModeToggle />
             {user.user === undefined && <p>Loading...</p>}
             <div>
               {!user.user ? (
@@ -59,6 +64,7 @@ export default function LandingPageNavbar() {
                 <UserButton afterSignOutUrl="/" />
               )}
             </div>
+            <ModeToggle />
           </ul>
         </div>
       </div>
