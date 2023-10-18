@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { ListTodo, Menu } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import ModeToggle from "@/components/ModeToggle";
@@ -28,6 +28,7 @@ export default function LandingPageNavbar() {
                 resolvedTheme === "dark" ? "text-purple-500" : "text-purple-600"
               }`}
             >
+              <ListTodo className="mb-1 mr-2 inline" size={32} />
               TODO:APP
             </h1>
           </Link>
