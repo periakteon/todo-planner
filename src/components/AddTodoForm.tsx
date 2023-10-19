@@ -39,7 +39,19 @@ import { useRouter } from "next/router";
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export default function AddTodoForm() {
-  const [markdown, setMarkdown] = useState("**Hello World**");
+  const [markdown, setMarkdown] = useState(`# Markdown Todo List
+
+  Bu Markdown Todo List, görevlerinizi organize etmenize yardımcı olacaktır. Aşağıda görevlerinizi ekleyebilirsiniz:
+  
+  - [x] Kahvaltı yapmak 😍
+  - [ ] Spor yapmak 💪
+  - [ ] Alışverişe gitmek 🛒
+  - [ ] Kodlama yapmak 💻
+  - [ ] Kitap okumak 📚
+  
+  Unutmayın ki bu sadece bir örnek ve gerçek görevlerinizi buraya ekleyebilirsiniz. İyi çalışmalar! 🚀
+
+`);
   const router = useRouter();
   const { resolvedTheme } = useTheme();
 
@@ -104,7 +116,9 @@ export default function AddTodoForm() {
               <FormControl>
                 <>
                   <div data-color-mode={resolvedTheme}>
+                    {/* TODO: MARKDOWN BOYUTUNU BÜYÜLT*/}
                     <MDEditor
+                      height={425}
                       value={markdown}
                       onChange={(value) => {
                         setMarkdown(value ?? "");
