@@ -224,7 +224,7 @@ export default function AddTodoForm() {
             ))}
           {!addTodo.isLoading && !addTodo.isSuccess && !addTodo.isError && (
             <span className="ml-1 flex">
-              <Save className="mr-2" />
+              <Save className="mr-2" size={20} />
               To-Do Ekle
             </span>
           )}
