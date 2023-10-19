@@ -115,7 +115,7 @@ export default function AddTodoForm() {
                 </>
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Markdown kullanarak To-Do&apos;nuzu detaylandırabilirsiniz.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -210,7 +210,7 @@ export default function AddTodoForm() {
                 </Popover>
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Kategori seçerek To-Do&apos;nuzu kategorize edebilirsiniz.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -304,7 +304,7 @@ export default function AddTodoForm() {
                 </Popover>
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Etiket seçerek To-Do&apos;nuzu etiketleyebilirsiniz.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -346,7 +346,7 @@ export default function AddTodoForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                Your date of birth is used to calculate your age.
+                To-Do&apos;nuzun son tarihini seçebilirsiniz.
               </FormDescription>
               <FormMessage />
             </FormItem>
