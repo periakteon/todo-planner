@@ -45,4 +45,39 @@ export const todoRouter = createTRPCRouter({
         });
       }
     }),
+  getCategoriesAndTags: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.auth.userId) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Bunu yapmaya yetkiniz yoktur.",
+      });
+    }
+
+    const categories = await ctx.db.category.findMany({
+      where: {
+        userId: ctx.auth.userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        color: true,
+      },
+    });
+
+    const tags = await ctx.db.tag.findMany({
+      where: {
+        userId: ctx.auth.userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        color: true,
+      },
+    });
+
+    return {
+      categories,
+      tags,
+    };
+  }),
 });

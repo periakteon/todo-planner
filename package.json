@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "author": {
     "name": "Masum Gökyüz",
-    "email": "masumgokyuz@gmail.com"},
+    "email": "masumgokyuz@gmail.com"
+  },
   "private": true,
   "scripts": {
     "build": "next build",

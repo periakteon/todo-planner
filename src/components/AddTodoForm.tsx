@@ -18,7 +18,7 @@ import { AddTodoFormSchema } from "@/utils/schemas";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/utils";
 import format from "date-fns/format";
-import { CalendarIcon, Save } from "lucide-react";
+import { CalendarIcon, Check, ChevronsUpDown, Save } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { tr } from "date-fns/locale";
 import { api } from "@/utils/api";
@@ -27,17 +27,27 @@ import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useTheme } from "next-themes";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "./ui/command";
+import { useRouter } from "next/router";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export default function AddTodoForm() {
   const [markdown, setMarkdown] = useState("**Hello World**");
+  const router = useRouter();
   const { resolvedTheme } = useTheme();
 
   const addTodo = api.todo.addTodo.useMutation({
     onSuccess: () => {
       toast({
         variant: "done",
+        duration: 2000,
         title: "Başarılı!",
         description: "To-Do başarıyla eklendi.",
       });
@@ -46,11 +56,16 @@ export default function AddTodoForm() {
     onError: (error) => {
       toast({
         variant: "destructive",
+        duration: 2000,
         title: "To-Do eklenirken bir hata oluştu!",
         description: error.message,
       });
     },
   });
+
+  const getCategoriesAndTags = api.todo.getCategoriesAndTags.useQuery();
+
+  const { data: categoriesAndTags } = getCategoriesAndTags;
 
   const form = useForm<z.infer<typeof AddTodoFormSchema>>({
     resolver: zodResolver(AddTodoFormSchema),
@@ -60,6 +75,8 @@ export default function AddTodoForm() {
     console.log("gelen submit data: ", data);
     void addTodo.mutate(data);
   }
+
+  console.log("form: ", form.watch());
 
   return (
     <Form {...form}>
@@ -109,9 +126,88 @@ export default function AddTodoForm() {
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Kategori (Opsiyonel)</FormLabel>
+              <FormLabel className="block">Kategori (Opsiyonel)</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-[300px] justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value && (
+                          <div className="flex items-center">
+                            <span
+                              style={{
+                                backgroundColor:
+                                  categoriesAndTags?.categories?.find(
+                                    (category) => category.id === field.value,
+                                  )?.color,
+                              }}
+                              className="mr-2 h-5 w-5 rounded"
+                            ></span>
+                            {
+                              categoriesAndTags?.categories?.find(
+                                (category) => category.id === field.value,
+                              )?.name
+                            }
+                          </div>
+                        )}
+                        {!field.value && "Kategori seçiniz"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="z-50 w-[300px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Kategori ara..." />
+                      <CommandEmpty>Kategori bulunamadı.</CommandEmpty>
+                      <CommandGroup className="max-h-64 overflow-y-auto">
+                        {categoriesAndTags?.categories.map((category) => (
+                          <CommandItem
+                            value={category.name}
+                            key={category.id}
+                            onSelect={() => {
+                              form.clearErrors("category");
+                              form.setValue("category", category.id);
+
+                              if (category.id === field.value) {
+                                form.setValue("category", undefined);
+                              }
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                category.id === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                            <div className="flex items-center">
+                              <span
+                                style={{ backgroundColor: category.color }}
+                                className="mr-2 h-5 w-5 rounded"
+                              ></span>
+                              {category.name}
+                            </div>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                      <Button
+                        variant={"outline"}
+                        className="mt-3 w-full"
+                        onClick={() => void router.push("/kategori")}
+                      >
+                        Kategori Ekle
+                      </Button>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -125,9 +221,87 @@ export default function AddTodoForm() {
           name="tag"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Etiket (Opsiyonel)</FormLabel>
+              <FormLabel className="block">Etiket (Opsiyonel)</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className={cn(
+                          "w-[300px] justify-between",
+                          !field.value && "text-muted-foreground",
+                        )}
+                      >
+                        {field.value && (
+                          <div className="flex items-center">
+                            <span
+                              style={{
+                                backgroundColor: categoriesAndTags?.tags?.find(
+                                  (tag) => tag.id === field.value,
+                                )?.color,
+                              }}
+                              className="mr-2 h-5 w-5 rounded"
+                            ></span>
+                            {
+                              categoriesAndTags?.tags?.find(
+                                (tag) => tag.id === field.value,
+                              )?.name
+                            }
+                          </div>
+                        )}
+                        {!field.value && "Etiket seçiniz"}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="z-50 w-[300px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Etiket ara..." />
+                      <CommandEmpty>Etiket bulunamadı.</CommandEmpty>
+                      <CommandGroup className="max-h-64 overflow-y-auto">
+                        {categoriesAndTags?.tags.map((tag) => (
+                          <CommandItem
+                            value={tag.name}
+                            key={tag.id}
+                            onSelect={() => {
+                              form.clearErrors("tag");
+                              form.setValue("tag", tag.id);
+
+                              if (tag.id === field.value) {
+                                form.setValue("tag", undefined);
+                              }
+                            }}
+                          >
+                            <Check
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                tag.id === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                            <div className="flex items-center">
+                              <span
+                                style={{ backgroundColor: tag.color }}
+                                className="mr-2 h-5 w-5 rounded"
+                              ></span>
+                              {tag.name}
+                            </div>
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                      <Button
+                        variant={"outline"}
+                        className="mt-3 w-full"
+                        onClick={() => void router.push("/kategori")}
+                      >
+                        Kategori Ekle
+                      </Button>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -167,9 +341,6 @@ export default function AddTodoForm() {
                     selected={field.value}
                     onSelect={field.onChange}
                     locale={tr}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
                     initialFocus
                   />
                 </PopoverContent>
