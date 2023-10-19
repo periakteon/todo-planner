@@ -82,7 +82,7 @@ export const todoRouter = createTRPCRouter({
     };
   }),
 
-  getTodos: protectedProcedure.query(async ({ ctx }) => {
+  getUndoneTodos: protectedProcedure.query(async ({ ctx }) => {
     if (!ctx.auth.userId) {
       throw new TRPCError({
         code: "UNAUTHORIZED",
@@ -93,12 +93,53 @@ export const todoRouter = createTRPCRouter({
     const todos = await ctx.db.todo.findMany({
       where: {
         userId: ctx.auth.userId,
+        isDone: false,
       },
       select: {
         id: true,
         title: true,
         content: true,
         dueDate: true,
+        isDone: true,
+        categoryId: true,
+        tagId: true,
+        category: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
+        tag: {
+          select: {
+            name: true,
+            color: true,
+          },
+        },
+      },
+    });
+
+    return todos;
+  }),
+
+  getDoneTodos: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.auth.userId) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Bunu yapmaya yetkiniz yoktur.",
+      });
+    }
+
+    const todos = await ctx.db.todo.findMany({
+      where: {
+        userId: ctx.auth.userId,
+        isDone: true,
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        dueDate: true,
+        isDone: true,
         categoryId: true,
         tagId: true,
         category: {
@@ -136,6 +177,31 @@ export const todoRouter = createTRPCRouter({
       await ctx.db.todo.delete({
         where: {
           id: input.id,
+        },
+      });
+    }),
+
+  tickTodo: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        status: z.boolean(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.auth.userId) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Bunu yapmaya yetkiniz yoktur.",
+        });
+      }
+
+      await ctx.db.todo.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          isDone: input.status,
         },
       });
     }),

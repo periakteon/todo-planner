@@ -1,8 +1,8 @@
 import {
   CalendarClock,
   ChevronDownIcon,
+  FileEdit,
   FolderOpen,
-  StarIcon,
   Tag,
   Trash2,
 } from "lucide-react";
@@ -29,12 +29,14 @@ import { api } from "@/utils/api";
 import { toast } from "./ui/use-toast";
 import format from "date-fns/format";
 import { tr } from "date-fns/locale";
+import { Checkbox } from "./ui/checkbox";
 
 type Todo =
   | {
       id: string;
       title: string;
       content: string | null;
+      isDone: boolean;
       category: {
         color: string;
         name: string;
@@ -73,14 +75,51 @@ export default function TodoView({ todos: todo }: { todos: Todo }) {
     },
   });
 
+  const tickTodo = api.todo.tickTodo.useMutation({
+    onSuccess: async () => {
+      await utils.todo.invalidate();
+      toast({
+        variant: "done",
+        duration: 700,
+        title: "Başarılı!",
+        description: "To-Do başarıyla güncellendi.",
+      });
+    },
+
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        duration: 700,
+        title: "To-Do güncellenirken bir hata oluştu!",
+        description: error.message,
+      });
+    },
+  });
+
   const transformedBackground = useRgba(todo?.category?.color, 0.1);
 
   return (
     <>
-      <Card key={todo?.id} className="mt-2">
+      <Card
+        key={todo?.id}
+        className={`mt-2 ${todo?.isDone ? "opacity-50" : ""}`}
+      >
         <CardHeader className="grid grid-cols-[1fr_110px] items-start gap-4 space-y-0">
           <div className="space-y-1">
-            <CardTitle>{todo?.title}</CardTitle>
+            <CardTitle>
+              <Checkbox
+                className="h-5 w-5 rounded-full"
+                checked={todo?.isDone}
+                onCheckedChange={() => {
+                  if (todo?.id) {
+                    tickTodo.mutate({ id: todo.id, status: !todo.isDone });
+                  }
+                }}
+              />
+              <span className={`ml-2 ${todo?.isDone ? "line-through" : ""}`}>
+                {todo?.title}
+              </span>
+            </CardTitle>
             <CardDescription>
               {todo?.content
                 ? todo.content.length > 100
@@ -90,14 +129,14 @@ export default function TodoView({ todos: todo }: { todos: Todo }) {
             </CardDescription>
           </div>
           <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-            <Button variant="secondary" className="px-0 shadow-none">
-              <StarIcon className="mx-2 h-4 w-4" />
+            <Button variant="secondary" className="mr-2 px-0 shadow-none">
+              <FileEdit className="mx-2 h-4 w-4" />
               Düzenle
             </Button>
             <Separator orientation="vertical" className="h-[20px]" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="px-2 shadow-none">
+                <Button variant="secondary" className="px-1 shadow-none">
                   <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
                 </Button>
               </DropdownMenuTrigger>

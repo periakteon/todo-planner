@@ -17,6 +17,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import { Plus } from "lucide-react";
 import AddTodoForm from "@/components/AddTodoForm";
 import TodoView from "@/components/TodoView";
@@ -26,9 +28,11 @@ import { useState } from "react";
 
 const TodoPage: MyPage = () => {
   const [closeInfo, setCloseInfo] = useState(false);
-  const todos = api.todo.getTodos.useQuery();
+  const undoneTodos = api.todo.getUndoneTodos.useQuery();
+  const doneTodos = api.todo.getDoneTodos.useQuery();
 
-  const { data: todoData, isLoading } = todos;
+  const { data: undoneTodoData, isLoading } = undoneTodos;
+  const { data: doneTodoData } = doneTodos;
 
   if (isLoading) {
     return <TodoFallback />;
@@ -58,7 +62,7 @@ const TodoPage: MyPage = () => {
                     <div className="flex justify-between">
                       <span className="font-medium">
                         To-Do ile ilgili detayları görmek için ilgili
-                        To-Do&rsquo;ya tıklayınız.
+                        To-Do&rsquo;nun başlığına tıklayınız.
                       </span>
                       <span
                         className="relative ml-4 flex h-3 w-3 cursor-pointer"
@@ -99,7 +103,22 @@ const TodoPage: MyPage = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-            {todoData?.map((todo) => <TodoView key={todo.id} todos={todo} />)}
+            <Tabs defaultValue="undone" className="w-full">
+              <TabsList className="w-full">
+                <TabsTrigger value="undone">Tamamlanmamış</TabsTrigger>
+                <TabsTrigger value="done">Tamamlanmış</TabsTrigger>
+              </TabsList>
+              <TabsContent value="undone">
+                {undoneTodoData?.map((todo) => (
+                  <TodoView key={todo.id} todos={todo} />
+                ))}
+              </TabsContent>
+              <TabsContent value="done">
+                {doneTodoData?.map((todo) => (
+                  <TodoView key={todo.id} todos={todo} />
+                ))}
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>
