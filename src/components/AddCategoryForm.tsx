@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
 import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -32,6 +33,7 @@ export default function AddCategoryForm() {
       form.setValue("name", "");
       toast({
         variant: "done",
+        duration: 1000,
         title: "Başarılı!",
         description: "Kategori başarıyla eklendi.",
       });

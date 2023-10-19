@@ -1,9 +1,13 @@
 import { z } from "zod";
 
 export const AddTodoFormSchema = z.object({
-  title: z.string({
-    required_error: "Başlık gereklidir.",
-  }),
+  title: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(3, {
+      message: "Başlık en az 3 karakter olmalıdır.",
+    }),
   content: z.string().optional(),
   category: z.string().optional(),
   tag: z.string().optional(),
@@ -11,8 +15,12 @@ export const AddTodoFormSchema = z.object({
 });
 
 export const AddCategorySchema = z.object({
-  name: z.string({
-    required_error: "Başlık gereklidir.",
-  }),
+  name: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(3, {
+      message: "Kategori adı en az 3 karakter olmalıdır.",
+    }),
   color: z.string().optional(),
 });
