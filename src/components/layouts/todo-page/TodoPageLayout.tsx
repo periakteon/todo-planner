@@ -8,6 +8,8 @@ const raleway = Raleway({ subsets: ["latin"] });
 
 const TodoPageLayout = ({ children }: PropsWithChildren) => {
   const user = useUser();
+
+  //TODO: loading fallback eklenecek.
   if (user.user === undefined) return <p>Loading...</p>;
 
   if (!user.user) {
