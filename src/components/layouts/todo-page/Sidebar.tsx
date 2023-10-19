@@ -97,7 +97,10 @@ export default function TodoPageSidebar() {
         </div>
       </nav>
       <aside
-        className={`fixed -top-1 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-16 transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
+        style={{
+          paddingTop: "4.3rem",
+        }}
+        className={`fixed -top-1 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
           mobile ? "translate-x-0" : ""
         }`}
       >
