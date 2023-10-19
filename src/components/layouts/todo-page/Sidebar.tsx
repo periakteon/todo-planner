@@ -56,7 +56,7 @@ export default function TodoPageSidebar() {
   return (
     <>
       <nav
-        className={`fixed top-0 z-50 w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-slate-900`}
+        className={`fixed top-0 z-50 w-full border-b border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900`}
       >
         <div className="px-3 py-3 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
@@ -117,7 +117,11 @@ export default function TodoPageSidebar() {
                 {menu.icon}
                 <AccordionTrigger
                   isChevronOpen={false}
-                  className="ml-10 text-lg font-semibold tracking-tight"
+                  className={`ml-10 text-lg font-semibold tracking-tight ${
+                    pathname === menu.link
+                      ? "border-r-4 border-purple-500 dark:border-purple-400"
+                      : "border-none"
+                  }`}
                   onClick={() => void router.push(menu.link)}
                 >
                   {menu.name}
