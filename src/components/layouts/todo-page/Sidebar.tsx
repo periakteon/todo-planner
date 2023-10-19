@@ -97,12 +97,12 @@ export default function TodoPageSidebar() {
         </div>
       </nav>
       <aside
-        className={`fixed -top-1 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-20 transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
+        className={`fixed -top-1 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-16 transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
           mobile ? "translate-x-0" : ""
         }`}
       >
         {" "}
-        <div className="h-full overflow-y-auto bg-white px-3 pb-4 dark:bg-slate-900">
+        <div className="h-full overflow-y-auto bg-white pb-4 pl-4 dark:bg-slate-900">
           {menus.map((menu, index) => (
             <Accordion
               key={index}
