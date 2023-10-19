@@ -18,10 +18,11 @@ export const todoRouter = createTRPCRouter({
         await ctx.db.todo.create({
           data: {
             title: input.title,
-            categoryId: input.category,
-            dueDate: input.dueDate,
-            tagId: input.tag,
+            content: input.content,
             userId: ctx.auth.userId,
+            categoryId: input.category,
+            tagId: input.tag,
+            dueDate: input.dueDate,
           },
         });
       } catch (error) {

@@ -22,8 +22,18 @@ import { CalendarIcon, Save } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { tr } from "date-fns/locale";
 import { api } from "@/utils/api";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { useTheme } from "next-themes";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 export default function AddTodoForm() {
+  const [markdown, setMarkdown] = useState("**Hello World**");
+  const { resolvedTheme } = useTheme();
+
   const addTodo = api.todo.addTodo.useMutation({
     onSuccess: () => {
       toast({
@@ -47,6 +57,7 @@ export default function AddTodoForm() {
   });
 
   function onSubmit(data: z.infer<typeof AddTodoFormSchema>) {
+    console.log("gelen submit data: ", data);
     void addTodo.mutate(data);
   }
 
@@ -70,11 +81,21 @@ export default function AddTodoForm() {
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>İçerik (Opsiyonel)</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <>
+                  <div data-color-mode={resolvedTheme}>
+                    <MDEditor
+                      value={markdown}
+                      onChange={(value) => {
+                        setMarkdown(value ?? "");
+                        form.setValue("content", value);
+                      }}
+                    />
+                  </div>
+                </>
               </FormControl>
               <FormDescription>
                 This is your public display name.

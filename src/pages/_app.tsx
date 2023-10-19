@@ -15,9 +15,10 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   if (!hasMounted) {
     return null;
   }
+
   return (
     <ClerkProvider {...pageProps}>
-      <ThemeProvider attribute="class" defaultTheme="dark">
+      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
         <NextNProgress
           color="#9333ea"
           startPosition={0.3}
