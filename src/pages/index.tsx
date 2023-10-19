@@ -73,7 +73,7 @@ const Home: MyPage = () => {
               </div>
               <div className="flex justify-center">
                 <Link
-                  href="/home"
+                  href="/dashboard"
                   className="inline-flex rounded border-0 bg-purple-600 px-6 py-2 text-lg text-white hover:bg-purple-500 focus:outline-none"
                 >
                   Kullanmaya Başla

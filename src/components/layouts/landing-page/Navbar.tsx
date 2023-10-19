@@ -14,7 +14,7 @@ export default function LandingPageNavbar() {
 
   const menus = [
     { title: "Anasayfa", path: "/" },
-    { title: "Todo Sayfası", path: "/home" },
+    { title: "Todo Sayfası", path: "/dashboard" },
   ];
   1;
 

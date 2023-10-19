@@ -33,9 +33,9 @@ export default function TodoPageSidebar() {
 
   const menus = [
     {
-      name: "Dashboard",
+      name: "DASHBOARD",
       icon: <Home className="-mb-10" />,
-      link: "/home",
+      link: "/dashboard",
     },
     {
       name: "TO-DO",
