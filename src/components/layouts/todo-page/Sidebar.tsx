@@ -101,16 +101,20 @@ export default function TodoPageSidebar() {
         {" "}
         <div className="h-full overflow-y-auto bg-white px-3 pb-4 dark:bg-slate-900">
           {menus.map((menu, index) => (
-            <Accordion key={index} type="single" className="mt-4">
+            <Accordion
+              key={index}
+              type="single"
+              className={`mt-4 ${
+                pathname === menu.link
+                  ? "text-purple-500 dark:text-purple-400"
+                  : "text-black dark:text-white"
+              }`}
+            >
               <AccordionItem value={`item-${index}`}>
                 {menu.icon}
                 <AccordionTrigger
                   isChevronOpen={false}
-                  className={`ml-10 text-lg font-semibold tracking-tight ${
-                    pathname === menu.link
-                      ? "text-purple-500 dark:text-purple-400"
-                      : "text-gray-500 dark:text-gray-200"
-                  }`}
+                  className="ml-10 text-lg font-semibold tracking-tight"
                   onClick={() => void router.push(menu.link)}
                 >
                   {menu.name}
