@@ -27,6 +27,9 @@ export default function TodoPageSidebar() {
   const { resolvedTheme } = useTheme();
 
   //TODO: To-Do eklenirken markdown desteği eklenecek.
+  //TODO: To-Do'ların/kategorilerin/etiketlerin sayısını sidebar'daki menüde gösteren bir badge eklenecek.
+  //TODO: Kategorilerin görüneceği badge'e color picker eklenecek ve seçilen renklerde badge'ler görünecek.
+  //TODO: Renk kodu veritabanına kayıt edilecek.
 
   const menus = [
     {
@@ -106,7 +109,7 @@ export default function TodoPageSidebar() {
               type="single"
               className={`mt-4 ${
                 pathname === menu.link
-                  ? "text-purple-500 dark:text-purple-400"
+                  ? "text-purple-500 underline dark:text-purple-400"
                   : "text-black dark:text-white"
               }`}
             >

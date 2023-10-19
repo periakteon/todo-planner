@@ -8,10 +8,47 @@ datasource db {
 }
 
 model Todo {
-    id String @id @default(uuid())
+    id     String @id @default(uuid())
+    userId String
 
-    title  String
+    title   String
+    content String? @db.Text
+
     isDone Boolean @default(false)
+
+    category   Category? @relation(fields: [categoryId], references: [id])
+    categoryId String?
+
+    Tag   Tag?    @relation(fields: [tagId], references: [id])
+    tagId String?
+
+    dueDate DateTime?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Category {
+    id     String @id @default(uuid())
+    userId String
+
+    name  String
+    color String
+
+    Todo Todo[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Tag {
+    id     String @id @default(uuid())
+    userId String
+
+    name  String
+    color String
+
+    Todo Todo[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

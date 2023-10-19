@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/card";
 
 const TagPage: MyPage = () => {
+  //TODO: Kategorilerin görüneceği badge'e color picker eklenecek ve seçilen renklerde badge'ler görünecek.
+  //TODO: Renk kodu veritabanına kayıt edilecek.
   return (
     <>
       <div className="p-4 sm:ml-64">
