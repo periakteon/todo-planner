@@ -52,11 +52,16 @@ export default function AddTodoForm() {
   Unutmayın ki bu sadece bir örnek ve gerçek görevlerinizi buraya ekleyebilirsiniz. İyi çalışmalar! 🚀
 
 `);
+
   const router = useRouter();
+
   const { resolvedTheme } = useTheme();
 
+  const utils = api.useContext();
+
   const addTodo = api.todo.addTodo.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await utils.todo.invalidate();
       toast({
         variant: "done",
         duration: 2000,
@@ -309,9 +314,9 @@ export default function AddTodoForm() {
                       <Button
                         variant={"outline"}
                         className="mt-3 w-full"
-                        onClick={() => void router.push("/kategori")}
+                        onClick={() => void router.push("/etiket")}
                       >
-                        Kategori Ekle
+                        Etiket Ekle
                       </Button>
                     </Command>
                   </PopoverContent>

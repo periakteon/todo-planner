@@ -19,7 +19,7 @@ model Todo {
     category   Category? @relation(fields: [categoryId], references: [id])
     categoryId String?
 
-    Tag   Tag?    @relation(fields: [tagId], references: [id])
+    tag   Tag?    @relation(fields: [tagId], references: [id])
     tagId String?
 
     dueDate DateTime?
