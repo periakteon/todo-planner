@@ -3,14 +3,14 @@ import TodoPageSidebar from "./Sidebar";
 import { Raleway } from "next/font/google";
 import { useUser } from "@clerk/nextjs";
 import NotLoggedIn from "./NotLoggedIn";
+import TodoPageFallback from "./TodoPageFallback";
 
 const raleway = Raleway({ subsets: ["latin"] });
 
 const TodoPageLayout = ({ children }: PropsWithChildren) => {
   const user = useUser();
 
-  //TODO: loading fallback eklenecek.
-  if (user.user === undefined) return <p>Loading...</p>;
+  if (user.user === undefined) return <TodoPageFallback />;
 
   if (!user.user) {
     return <NotLoggedIn />;
