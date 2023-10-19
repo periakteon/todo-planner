@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 
 const TodoHome: MyPage = () => {
+  //TODO: Chart.js kullanılacak
   return (
     <>
       <div className="p-4 sm:ml-64">

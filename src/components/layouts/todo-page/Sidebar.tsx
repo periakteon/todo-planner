@@ -7,14 +7,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
 import {
-  BookmarkPlus,
   FolderHeart,
-  FolderPlus,
-  Home,
   ListTodo,
   Loader,
   MenuIcon,
-  PlusCircle,
+  PieChart,
   Tags,
 } from "lucide-react";
 import Link from "next/link";
@@ -34,7 +31,7 @@ export default function TodoPageSidebar() {
   const menus = [
     {
       name: "DASHBOARD",
-      icon: <Home className="-mb-10" />,
+      icon: <PieChart className="-mb-10" />,
       link: "/dashboard",
     },
     {
