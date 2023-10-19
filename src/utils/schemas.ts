@@ -19,8 +19,19 @@ export const AddCategorySchema = z.object({
     .string({
       required_error: "Başlık gereklidir.",
     })
-    .min(3, {
-      message: "Kategori adı en az 3 karakter olmalıdır.",
+    .min(2, {
+      message: "Kategori adı en az 2 karakter olmalıdır.",
+    }),
+  color: z.string().optional(),
+});
+
+export const AddTagSchema = z.object({
+  name: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(2, {
+      message: "Kategori adı en az 2 karakter olmalıdır.",
     }),
   color: z.string().optional(),
 });

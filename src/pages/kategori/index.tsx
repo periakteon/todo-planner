@@ -20,16 +20,16 @@ import {
 import { PlusCircle } from "lucide-react";
 
 const CategoryPage: MyPage = () => {
-  //TODO: Kategorilerin görüneceği badge'e color picker eklenecek ve seçilen renklerde badge'ler görünecek.
-  //TODO: Renk kodu veritabanına kayıt edilecek.
+  //TODO: Kategori düzenleme ve silme işlemleri yapılacak.
   return (
     <>
       <div className="p-4 sm:ml-64">
         <Card className="mt-16 rounded-lg p-0">
           <CardHeader>
-            <CardTitle>Kategori Ekle</CardTitle>
+            <CardTitle>Kategoriler</CardTitle>
             <CardDescription>
-              Aşağıdan kategori ekleyebilirsiniz.
+              Aşağıdan kategori ekleyebilir ve eklemiş olduğunuz kategorileri
+              görebilirsiniz.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -41,7 +41,7 @@ const CategoryPage: MyPage = () => {
                     className="inline-flex items-center rounded-lg bg-green-600 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-200 dark:bg-green-600 dark:hover:bg-green-500 dark:focus:ring-green-800"
                   >
                     <PlusCircle className="mr-2" />
-                    Kategori Ekle
+                    Yeni Kategori Ekle
                   </Button>
                 </SheetTrigger>
                 <SheetContent>
