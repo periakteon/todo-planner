@@ -1,14 +1,22 @@
 import ModeToggle from "@/components/ModeToggle";
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/utils";
+import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { Home, ListTodo, Loader, MenuIcon, ScrollText } from "lucide-react";
+import {
+  BookmarkPlus,
+  FolderHeart,
+  FolderPlus,
+  Home,
+  ListTodo,
+  Loader,
+  MenuIcon,
+  PlusCircle,
+  Tags,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -21,6 +29,30 @@ export default function TodoPageSidebar() {
   const { pathname } = router;
   const { resolvedTheme } = useTheme();
 
+  //TODO: To-Do eklenirken markdown desteği eklenecek.
+
+  const menus = [
+    {
+      name: "Dashboard",
+      icon: <Home className="-mb-10" />,
+      link: "/home",
+    },
+    {
+      name: "TO-DO",
+      icon: <ListTodo className="-mb-10" />,
+      link: "/todo",
+    },
+    {
+      name: "KATEGORİLER",
+      icon: <FolderHeart className="-mb-10" />,
+      link: "/kategori",
+    },
+    {
+      name: "ETİKETLER",
+      icon: <Tags className="-mb-10" />,
+      link: "/etiket",
+    },
+  ];
   return (
     <>
       <nav
@@ -65,57 +97,30 @@ export default function TodoPageSidebar() {
         </div>
       </nav>
       <aside
-        className={`fixed left-0 top-4 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-20 transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
+        className={`fixed -top-1 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white pt-20 transition-transform dark:border-gray-700 dark:bg-slate-900 sm:translate-x-0 ${
           mobile ? "translate-x-0" : ""
         }`}
       >
         {" "}
         <div className="h-full overflow-y-auto bg-white px-3 pb-4 dark:bg-slate-900">
-          <Accordion type="single" className="mt-4">
-            <AccordionItem value="item-1">
-              <Home className="-mb-10" />
-              <AccordionTrigger
-                isChevronOpen={false}
-                className="ml-10 text-lg font-semibold tracking-tight"
-                onClick={() => void router.push("/home")}
-              >
-                ANASAYFA
-              </AccordionTrigger>
-            </AccordionItem>
-          </Accordion>
-          <Accordion type="single" collapsible className="mt-4">
-            <AccordionItem value="item-1">
-              <ListTodo className="-mb-10" />
-              <AccordionTrigger
-                isChevronOpen={true}
-                className="ml-10 text-lg font-semibold tracking-tight"
-              >
-                TO-DO
-              </AccordionTrigger>
-              <AccordionContent className="">
-                <Link
-                  href="/todo/liste"
-                  className={cn(
-                    "block",
-                    "w-full",
-                    "justify-start",
-                    buttonVariants({ variant: "ghost" }),
-                    pathname === "/todo/liste"
-                      ? "bg-muted hover:bg-muted"
-                      : "hover:bg-transparent hover:underline",
-                    "justify-start",
-                  )}
+          {menus.map((menu, index) => (
+            <Accordion key={index} type="single" className="mt-4">
+              <AccordionItem value={`item-${index}`}>
+                {menu.icon}
+                <AccordionTrigger
+                  isChevronOpen={false}
+                  className={`ml-10 text-lg font-semibold tracking-tight ${
+                    pathname === menu.link
+                      ? "text-purple-500 dark:text-purple-400"
+                      : "text-gray-500 dark:text-gray-200"
+                  }`}
+                  onClick={() => void router.push(menu.link)}
                 >
-                  <ScrollText
-                    color={resolvedTheme === "dark" ? "#a85ced" : "#9333EA"}
-                    size={20}
-                    className="mr-2"
-                  />
-                  To-Do Listesi
-                </Link>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+                  {menu.name}
+                </AccordionTrigger>
+              </AccordionItem>
+            </Accordion>
+          ))}
         </div>
       </aside>
     </>

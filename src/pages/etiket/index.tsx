@@ -7,20 +7,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const TodoList: MyPage = () => {
+const TagPage: MyPage = () => {
   return (
     <>
       <div className="p-4 sm:ml-64">
         <Card className="mt-16 rounded-lg p-0">
           <CardHeader>
-            <CardTitle>To-Do Listesi</CardTitle>
+            <CardTitle>Etiket Listesi</CardTitle>
             <CardDescription>
-              Aşağıda eklemiş olduğunuz To-Do&rsquo;ların listesini
-              görebilirsiniz.
+              Aşağıdan eklemiş olduğunuz etiketlerinizi görebilirsiniz.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <span>To-Do Test</span>
+            <span>Kategori Test</span>
           </CardContent>
         </Card>
       </div>
@@ -28,5 +27,5 @@ const TodoList: MyPage = () => {
   );
 };
 
-export default TodoList;
-TodoList.Layout = "TodoPage";
+export default TagPage;
+TagPage.Layout = "TodoPage";
