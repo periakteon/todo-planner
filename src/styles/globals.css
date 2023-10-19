@@ -31,6 +31,9 @@
     --purple: 271 81.3% 55.9%;
     --purple-foreground: 280 40% 98%;
 
+    --done: 142, 76%, 36%;
+    --done-foreground: 142, 76%, 36%;
+
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
@@ -66,6 +69,9 @@
     --purple: 271 81.3% 55.9%;
     --purple-foreground: 280 40% 98%;
 
+    --done: 142, 76%, 36%;
+    --done-foreground: 142, 76%, 36%;
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
@@ -79,4 +85,22 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1e9f5;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d7c9eb;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #bea7c7;
 }

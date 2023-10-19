@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -19,6 +18,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Plus } from "lucide-react";
+import AddTodoForm from "@/components/AddTodoForm";
 
 const TodoPage: MyPage = () => {
   return (
@@ -43,20 +43,18 @@ const TodoPage: MyPage = () => {
                   To-Do Ekle
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="sm:max-w-[425px] md:max-w-[500px] lg:max-w-[600px]">
+              <AlertDialogContent className="h-[550px] overflow-y-scroll sm:max-w-[425px] md:max-w-[650px] lg:max-w-[750px]">
                 <AlertDialogHeader>
                   <AlertDialogTitle>To-Do Ekle</AlertDialogTitle>
                   <AlertDialogDescription>
                     Aşağıdaki formu doldurarak yeni bir To-Do ekleyebilirsiniz.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
+                <AddTodoForm />
                 <AlertDialogFooter>
                   <AlertDialogCancel className="bg-red-500 text-white hover:bg-red-400 hover:text-white">
-                    Vazgeç
+                    KAPAT
                   </AlertDialogCancel>
-                  <AlertDialogAction className="bg-purple-500 text-white hover:bg-purple-400 hover:text-white">
-                    Kaydet
-                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

@@ -38,6 +38,10 @@ module.exports = {
           DEFAULT: "hsl(var(--purple))",
           foreground: "hsl(var(--purple-foreground))",
         },
+        done: {
+          DEFAULT: "hsl(var(--done))",
+          foreground: "hsl(var(--done-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
