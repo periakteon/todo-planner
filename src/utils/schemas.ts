@@ -62,3 +62,15 @@ export const UpdateCategorySchema = z.object({
     }),
   color: z.string().optional(),
 });
+
+export const UpdateTagSchema = z.object({
+  id: z.string(),
+  name: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(2, {
+      message: "Etiket adı en az 2 karakter olmalıdır.",
+    }),
+  color: z.string().optional(),
+});

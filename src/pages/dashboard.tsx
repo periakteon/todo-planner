@@ -20,7 +20,10 @@ const TodoHome: MyPage = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <span>To-Do Test</span>
+            <span>
+              Chart.js veya Rechart kullanılarak kolaylıkla detaylı bir
+              dashboard hazırlanabilir...
+            </span>
           </CardContent>
         </Card>
       </div>

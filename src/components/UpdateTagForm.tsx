@@ -3,56 +3,68 @@ import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SketchPicker } from "react-color";
 import { toast } from "@/components/ui/use-toast";
-import { AddCategorySchema } from "@/utils/schemas";
-import { Save } from "lucide-react";
+import { UpdateTagSchema } from "@/utils/schemas";
 import { api } from "@/utils/api";
 import { useState } from "react";
+import { Label } from "./ui/label";
+import { SliderPicker } from "react-color";
+import { Save } from "lucide-react";
 
-export default function AddTagForm() {
-  const [color, setColor] = useState<string>("#fff");
+type Tag = {
+  id: string;
+  userId: string;
+  name: string;
+  color: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
-  const form = useForm<z.infer<typeof AddCategorySchema>>({
-    resolver: zodResolver(AddCategorySchema),
-  });
-
+export default function UpdateTagForm({ tag }: { tag: Tag }) {
+  const [, setColor] = useState<string>("#fff");
   const utils = api.useContext();
 
-  const addTag = api.tag.addTag.useMutation({
+  const updateTag = api.tag.updateTag.useMutation({
     onSuccess: async () => {
       await utils.tag.invalidate();
-      form.setValue("name", "");
       toast({
         variant: "done",
-        duration: 1000,
+        duration: 2000,
         title: "Başarılı!",
-        description: "Etiket başarıyla eklendi.",
+        description: "Kategori başarıyla güncellendi.",
       });
     },
 
     onError: (error) => {
       toast({
         variant: "destructive",
-        title: "Etiket eklenirken bir hata oluştu!",
+        duration: 2000,
+        title: "Kategori güncellenirken bir hata oluştu!",
         description: error.message,
       });
     },
   });
 
-  function onSubmit(data: z.infer<typeof AddCategorySchema>) {
-    void addTag.mutate(data);
+  const form = useForm<z.infer<typeof UpdateTagSchema>>({
+    resolver: zodResolver(UpdateTagSchema),
+    defaultValues: {
+      id: tag.id,
+      name: tag.name,
+      color: tag.color,
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof UpdateTagSchema>) {
+    void updateTag.mutate(data);
   }
 
   return (
@@ -67,11 +79,14 @@ export default function AddTagForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Etiket Adı</FormLabel>
                 <FormControl>
-                  <Input placeholder="Örn. TypeScript" {...field} />
+                  <div className="grid gap-2">
+                    <div className="grid grid-cols-3 items-center gap-4">
+                      <Label htmlFor="width">Ad</Label>
+                      <Input placeholder="Örn. İş" {...field} />
+                    </div>
+                  </div>
                 </FormControl>
-                <FormDescription>Etiket adını yazınız.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -83,9 +98,8 @@ export default function AddTagForm() {
               <FormItem>
                 <FormLabel>Renk (Opsiyonel)</FormLabel>
                 <FormControl>
-                  <SketchPicker
-                    disableAlpha={true}
-                    color={color}
+                  <SliderPicker
+                    color={field.value}
                     onChange={(color) => setColor(color.hex)}
                     onChangeComplete={(color) => {
                       field.onChange(color.hex);
@@ -96,8 +110,8 @@ export default function AddTagForm() {
               </FormItem>
             )}
           />
-          <Button disabled={addTag.isLoading} type="submit" variant="purple">
-            {addTag.isLoading && (
+          <Button disabled={updateTag.isLoading} type="submit" variant="purple">
+            {updateTag.isLoading && (
               <div className="flex items-center justify-center text-center">
                 <svg
                   className="h-5 w-5 animate-spin text-white"
@@ -121,8 +135,8 @@ export default function AddTagForm() {
                 </svg>
               </div>
             )}
-            {addTag.isError === false ||
-              (addTag.isError && (
+            {updateTag.isError === false ||
+              (updateTag.isError && (
                 <div className="flex items-center justify-center text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +154,7 @@ export default function AddTagForm() {
                   <span className="ml-2">Başarısız</span>
                 </div>
               ))}
-            {!addTag.isLoading && !addTag.isError && (
+            {!updateTag.isLoading && !updateTag.isError && (
               <span className="ml-1 flex">
                 <Save className="mr-2" size={20} />
                 Kaydet
