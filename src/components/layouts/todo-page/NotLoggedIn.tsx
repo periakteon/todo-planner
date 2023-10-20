@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 
 export default function NotLoggedIn() {
   const router = useRouter();
+  const { pathname } = router;
   return (
     <div
       className="
@@ -35,7 +36,7 @@ export default function NotLoggedIn() {
             Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.
           </p>
 
-          <SignInButton mode="modal" afterSignInUrl="/dashboard">
+          <SignInButton mode="modal" afterSignInUrl={`${pathname}`}>
             <Button variant={"purple"}>Giriş Yap</Button>
           </SignInButton>
         </div>

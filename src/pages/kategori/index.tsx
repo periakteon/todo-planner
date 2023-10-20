@@ -101,6 +101,15 @@ const CategoryPage: MyPage = () => {
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
+              {categories.isLoading && (
+                <Card className="w-3/3 mt-4 rounded-lg p-0 sm:w-2/3 md:w-2/3">
+                  <CardContent>
+                    <div className="flex items-center justify-center">
+                      <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-purple-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
               {categoryData?.length === 0 ? (
                 <div className="mt-4">
                   <p className="text-center text-gray-500 dark:text-gray-400">
