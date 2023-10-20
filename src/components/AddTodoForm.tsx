@@ -119,7 +119,6 @@ export default function AddTodoForm() {
               <FormControl>
                 <>
                   <div data-color-mode={resolvedTheme}>
-                    {/* TODO: MARKDOWN BOYUTUNU BÜYÜLT*/}
                     <MDEditor
                       height={425}
                       value={markdown}

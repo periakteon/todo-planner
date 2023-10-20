@@ -41,6 +41,7 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import UpdateTodoForm from "./UpdateTodoForm";
+import PreviewTodo from "./PreviewTodo";
 
 type Todo =
   | {
@@ -62,7 +63,7 @@ type Todo =
     }
   | undefined;
 
-export default function TodoView({ todos: todo }: { todos: Todo }) {
+export default function TodoList({ todos: todo }: { todos: Todo }) {
   const utils = api.useContext();
 
   const deleteTodo = api.todo.deleteTodo.useMutation({
@@ -127,9 +128,25 @@ export default function TodoView({ todos: todo }: { todos: Todo }) {
                   }
                 }}
               />
-              <span className={`ml-2 ${todo?.isDone ? "line-through" : ""}`}>
-                {todo?.title}
-              </span>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <span
+                    className={`ml-2 cursor-pointer hover:opacity-60 ${
+                      todo?.isDone ? "line-through" : ""
+                    }`}
+                  >
+                    {todo?.title}
+                  </span>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="h-[550px] overflow-y-scroll sm:max-w-[475px] md:max-w-[725px] lg:max-w-[850px]">
+                  <PreviewTodo todo={todo} />
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="bg-red-500 text-white hover:bg-red-400 hover:text-white">
+                      KAPAT
+                    </AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </CardTitle>
             <CardDescription>
               {todo?.content

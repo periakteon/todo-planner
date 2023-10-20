@@ -26,11 +26,6 @@ export default function TodoPageSidebar() {
   const { pathname } = router;
   const { resolvedTheme } = useTheme();
 
-  //TODO: To-Do eklenirken markdown desteği eklenecek.
-  //TODO: To-Do'ların/kategorilerin/etiketlerin sayısını sidebar'daki menüde gösteren bir badge eklenecek.
-  //TODO: Kategorilerin görüneceği badge'e color picker eklenecek ve seçilen renklerde badge'ler görünecek.
-  //TODO: Renk kodu veritabanına kayıt edilecek.
-
   const menus = [
     {
       name: "DASHBOARD",

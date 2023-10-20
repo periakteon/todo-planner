@@ -21,7 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Plus } from "lucide-react";
 import AddTodoForm from "@/components/AddTodoForm";
-import TodoView from "@/components/TodoView";
+import TodoList from "@/components/TodoList";
 import { api } from "@/utils/api";
 import TodoFallback from "@/components/TodoFallback";
 import { useState } from "react";
@@ -109,17 +109,17 @@ const TodoPage: MyPage = () => {
                   Tamamlanmamış ({undoneTodoData?.length})
                 </TabsTrigger>
                 <TabsTrigger value="done">
-                  Tamamlanmamış ({doneTodoData?.length})
+                  Tamamlanmış ({doneTodoData?.length})
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="undone">
                 {undoneTodoData?.map((todo) => (
-                  <TodoView key={todo.id} todos={todo} />
+                  <TodoList key={todo.id} todos={todo} />
                 ))}
               </TabsContent>
               <TabsContent value="done">
                 {doneTodoData?.map((todo) => (
-                  <TodoView key={todo.id} todos={todo} />
+                  <TodoList key={todo.id} todos={todo} />
                 ))}
               </TabsContent>
             </Tabs>
