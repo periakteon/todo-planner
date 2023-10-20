@@ -113,14 +113,34 @@ const TodoPage: MyPage = () => {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="undone">
-                {undoneTodoData?.map((todo) => (
-                  <TodoList key={todo.id} todos={todo} />
-                ))}
+                {undoneTodos.isLoading ? (
+                  <Card className="w-3/3 mt-4 rounded-lg p-0 sm:w-2/3 md:w-2/3">
+                    <CardContent>
+                      <div className="flex items-center justify-center">
+                        <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-purple-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  undoneTodoData?.map((todo) => (
+                    <TodoList key={todo.id} todos={todo} />
+                  ))
+                )}
               </TabsContent>
               <TabsContent value="done">
-                {doneTodoData?.map((todo) => (
-                  <TodoList key={todo.id} todos={todo} />
-                ))}
+                {doneTodos.isLoading ? (
+                  <Card className="w-3/3 mt-4 rounded-lg p-0 sm:w-2/3 md:w-2/3">
+                    <CardContent>
+                      <div className="flex items-center justify-center">
+                        <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-purple-500" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  doneTodoData?.map((todo) => (
+                    <TodoList key={todo.id} todos={todo} />
+                  ))
+                )}
               </TabsContent>
             </Tabs>
           </CardContent>
