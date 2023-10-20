@@ -35,7 +35,7 @@ export default function NotLoggedIn() {
             Bu sayfayı görüntülemek için giriş yapmanız gerekmektedir.
           </p>
 
-          <SignInButton mode="modal" afterSignInUrl="/home">
+          <SignInButton mode="modal" afterSignInUrl="/dashboard">
             <Button variant={"purple"}>Giriş Yap</Button>
           </SignInButton>
         </div>
