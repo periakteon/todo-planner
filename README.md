@@ -1,5 +1,11 @@
 # Modern To-Do App
 
+[![Watch the video](https://img.youtube.com/vi/nV7BAHsDQ1g/hqdefault.jpg)](https://www.youtube.com/watch?v=nV7BAHsDQ1g)
+
+**Not**: Videoda giriş yapmadan protected route'lara erişmeyen kullanıcılara gösterilen sayfayı göstermeyi unutmuşum. Görsel olarak aşağıya ekliyorum veya siz de login yapmadan https://todo-planner-ivory.vercel.app/dashboard gibi kullanıcı girişi gerektiren adreslere giderek deneyebilirsiniz.
+
+![image](https://i.hizliresim.com/7kf8j2t.png)
+
 Merhaba,
 
 Bu repodaki proje, VisioSoft'un talebi üzerine hazırlanmış olup Full Stack bir To-Do uygulamasıdır. Bu uygulamanın, mevcut To-Do uygulamalarından daha detaylı, estetik ve modern olduğunu düşünüyoruz.
