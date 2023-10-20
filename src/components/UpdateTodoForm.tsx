@@ -424,7 +424,7 @@ export default function UpdateTodoForm({ todo }: { todo: Todo }) {
               >
                 <path d="M9.293 16.293l-4-4a1 1 0 011.414-1.414L10 13.586l6.293-6.293a1 1 0 111.414 1.414l-7 7a1 1 0 01-1.414 0z" />
               </svg>
-              <span className="ml-2">Başarıyla Eklendi</span>
+              <span className="ml-2">Başarıyla Güncellendi</span>
             </div>
           )}
           {updateTodo.isError === false ||
