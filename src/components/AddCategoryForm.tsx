@@ -27,9 +27,10 @@ export default function AddCategoryForm() {
   const form = useForm<z.infer<typeof AddCategorySchema>>({
     resolver: zodResolver(AddCategorySchema),
   });
-
+  const utils = api.useContext();
   const addCategory = api.category.addCategory.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
+      await utils.category.invalidate();
       form.setValue("name", "");
       toast({
         variant: "done",
