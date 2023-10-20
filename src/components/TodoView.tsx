@@ -30,6 +30,17 @@ import { toast } from "./ui/use-toast";
 import format from "date-fns/format";
 import { tr } from "date-fns/locale";
 import { Checkbox } from "./ui/checkbox";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
+import UpdateTodoForm from "./UpdateTodoForm";
 
 type Todo =
   | {
@@ -129,10 +140,29 @@ export default function TodoView({ todos: todo }: { todos: Todo }) {
             </CardDescription>
           </div>
           <div className="flex items-center space-x-1 rounded-md bg-secondary text-secondary-foreground">
-            <Button variant="secondary" className="mr-2 px-0 shadow-none">
-              <FileEdit className="mx-2 h-4 w-4" />
-              Düzenle
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button variant="secondary" className="mr-2 px-0 shadow-none">
+                  <FileEdit className="mx-2 h-4 w-4" />
+                  Düzenle
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="h-[550px] overflow-y-scroll sm:max-w-[425px] md:max-w-[650px] lg:max-w-[750px]">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>To-Do Düzenle</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Aşağıdaki formu kullanarak To-Do&apos;yu
+                    düzenleyebilirsiniz.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <UpdateTodoForm key={todo?.id} todo={todo} />
+                <AlertDialogFooter>
+                  <AlertDialogCancel className="bg-red-500 text-white hover:bg-red-400 hover:text-white">
+                    KAPAT
+                  </AlertDialogCancel>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             <Separator orientation="vertical" className="h-[20px]" />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

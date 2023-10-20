@@ -1,6 +1,6 @@
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import { AddTodoFormSchema } from "@/utils/schemas";
+import { AddTodoFormSchema, UpdateTodoSchema } from "@/utils/schemas";
 import { Prisma } from "@prisma/client";
 import { z } from "zod";
 
@@ -46,6 +46,31 @@ export const todoRouter = createTRPCRouter({
         });
       }
     }),
+
+  updateTodo: protectedProcedure
+    .input(UpdateTodoSchema)
+    .mutation(async ({ input, ctx }) => {
+      if (!ctx.auth.userId) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Bunu yapmaya yetkiniz yoktur.",
+        });
+      }
+
+      await ctx.db.todo.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          content: input.content,
+          categoryId: input.category,
+          tagId: input.tag,
+          dueDate: input.dueDate,
+        },
+      });
+    }),
+
   getCategoriesAndTags: protectedProcedure.query(async ({ ctx }) => {
     if (!ctx.auth.userId) {
       throw new TRPCError({

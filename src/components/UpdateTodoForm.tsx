@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { AddTodoFormSchema } from "@/utils/schemas";
+import { UpdateTodoSchema } from "@/utils/schemas";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { cn } from "@/utils";
 import format from "date-fns/format";
@@ -36,22 +36,30 @@ import {
 } from "./ui/command";
 import { useRouter } from "next/router";
 
+type Todo =
+  | {
+      id: string;
+      title: string;
+      content: string | null;
+      isDone: boolean;
+      category: {
+        color: string;
+        name: string;
+      } | null;
+      tag: {
+        name: string;
+        color: string;
+      } | null;
+      dueDate: Date | null;
+      categoryId: string | null;
+      tagId: string | null;
+    }
+  | undefined;
+
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
-export default function AddTodoForm() {
-  const [markdown, setMarkdown] = useState(`# Markdown Todo List
-
-  Bu Markdown Todo List, görevlerinizi organize etmenize yardımcı olacaktır. Aşağıda görevlerinizi ekleyebilirsiniz:
-  
-  - [x] Kahvaltı yapmak 😍
-  - [ ] Spor yapmak 💪
-  - [ ] Alışverişe gitmek 🛒
-  - [ ] Kodlama yapmak 💻
-  - [ ] Kitap okumak 📚
-  
-  Unutmayın ki bu sadece bir örnek ve gerçek görevlerinizi buraya ekleyebilirsiniz. İyi çalışmalar! 🚀
-
-`);
+export default function UpdateTodoForm({ todo }: { todo: Todo }) {
+  const [markdown, setMarkdown] = useState(todo?.content ?? "");
 
   const router = useRouter();
 
@@ -59,14 +67,14 @@ export default function AddTodoForm() {
 
   const utils = api.useContext();
 
-  const addTodo = api.todo.addTodo.useMutation({
+  const updateTodo = api.todo.updateTodo.useMutation({
     onSuccess: async () => {
       await utils.todo.invalidate();
       toast({
         variant: "done",
         duration: 2000,
         title: "Başarılı!",
-        description: "To-Do başarıyla eklendi.",
+        description: "To-Do başarıyla güncellendi.",
       });
     },
 
@@ -74,7 +82,7 @@ export default function AddTodoForm() {
       toast({
         variant: "destructive",
         duration: 2000,
-        title: "To-Do eklenirken bir hata oluştu!",
+        title: "To-Do güncellenirken bir hata oluştu!",
         description: error.message,
       });
     },
@@ -84,13 +92,20 @@ export default function AddTodoForm() {
 
   const { data: categoriesAndTags } = getCategoriesAndTags;
 
-  const form = useForm<z.infer<typeof AddTodoFormSchema>>({
-    resolver: zodResolver(AddTodoFormSchema),
+  const form = useForm<z.infer<typeof UpdateTodoSchema>>({
+    resolver: zodResolver(UpdateTodoSchema),
+    defaultValues: {
+      id: todo?.id,
+      title: todo?.title,
+      content: todo?.content ?? "",
+      category: todo?.categoryId ?? undefined,
+      tag: todo?.tagId ?? undefined,
+      dueDate: todo?.dueDate ?? undefined,
+    },
   });
 
-  function onSubmit(data: z.infer<typeof AddTodoFormSchema>) {
-    console.log("gelen submit data: ", data);
-    void addTodo.mutate(data);
+  function onSubmit(data: z.infer<typeof UpdateTodoSchema>) {
+    void updateTodo.mutate(data);
   }
 
   return (
@@ -370,11 +385,11 @@ export default function AddTodoForm() {
           )}
         />
         <Button
-          disabled={addTodo.isLoading || addTodo.isSuccess}
+          disabled={updateTodo.isLoading || updateTodo.isSuccess}
           type="submit"
           variant="purple"
         >
-          {addTodo.isLoading && (
+          {updateTodo.isLoading && (
             <div className="flex items-center justify-center text-center">
               <svg
                 className="h-5 w-5 animate-spin text-white"
@@ -398,7 +413,7 @@ export default function AddTodoForm() {
               </svg>
             </div>
           )}
-          {addTodo.isSuccess === true && (
+          {updateTodo.isSuccess === true && (
             <div className="flex items-center justify-center text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -412,8 +427,8 @@ export default function AddTodoForm() {
               <span className="ml-2">Başarıyla Eklendi</span>
             </div>
           )}
-          {addTodo.isError === false ||
-            (addTodo.isError && (
+          {updateTodo.isError === false ||
+            (updateTodo.isError && (
               <div className="flex items-center justify-center text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -431,12 +446,14 @@ export default function AddTodoForm() {
                 <span className="ml-2">Başarısız</span>
               </div>
             ))}
-          {!addTodo.isLoading && !addTodo.isSuccess && !addTodo.isError && (
-            <span className="ml-1 flex">
-              <Save className="mr-2" size={20} />
-              To-Do Ekle
-            </span>
-          )}
+          {!updateTodo.isLoading &&
+            !updateTodo.isSuccess &&
+            !updateTodo.isError && (
+              <span className="ml-1 flex">
+                <Save className="mr-2" size={20} />
+                To-Do Güncelle
+              </span>
+            )}
         </Button>
       </form>
     </Form>

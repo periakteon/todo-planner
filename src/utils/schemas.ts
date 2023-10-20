@@ -35,3 +35,18 @@ export const AddTagSchema = z.object({
     }),
   color: z.string().optional(),
 });
+
+export const UpdateTodoSchema = z.object({
+  id: z.string(),
+  title: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(3, {
+      message: "Başlık en az 3 karakter olmalıdır.",
+    }),
+  content: z.string().optional(),
+  category: z.string().optional(),
+  tag: z.string().optional(),
+  dueDate: z.date().optional(),
+});
