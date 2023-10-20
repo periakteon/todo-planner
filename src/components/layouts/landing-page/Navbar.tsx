@@ -55,7 +55,9 @@ export default function LandingPageNavbar() {
                 <Link href={item.path}>{item.title}</Link>
               </li>
             ))}
-            {user.user === undefined && <p>Loading...</p>}
+            {user.user === undefined && (
+              <div className="h-8 w-8 animate-pulse rounded-full bg-gray-300" />
+            )}
             <div>
               {!user.user ? (
                 <SignInButton mode="modal">
