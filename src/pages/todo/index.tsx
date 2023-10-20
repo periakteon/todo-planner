@@ -105,8 +105,12 @@ const TodoPage: MyPage = () => {
             </AlertDialog>
             <Tabs defaultValue="undone" className="w-full">
               <TabsList className="w-full">
-                <TabsTrigger value="undone">Tamamlanmamış</TabsTrigger>
-                <TabsTrigger value="done">Tamamlanmış</TabsTrigger>
+                <TabsTrigger value="undone">
+                  Tamamlanmamış ({undoneTodoData?.length})
+                </TabsTrigger>
+                <TabsTrigger value="done">
+                  Tamamlanmamış ({doneTodoData?.length})
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="undone">
                 {undoneTodoData?.map((todo) => (
