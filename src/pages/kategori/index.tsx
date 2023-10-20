@@ -1,6 +1,7 @@
 import AddCategoryForm from "@/components/AddCategoryForm";
 import { type MyPage } from "@/components/layouts/types";
 import { Button } from "@/components/ui/button";
+
 import {
   Sheet,
   SheetContent,
@@ -18,9 +19,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
+import { api } from "@/utils/api";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import UpdateCategoryForm from "@/components/UpdateCategoryForm";
 
 const CategoryPage: MyPage = () => {
-  //TODO: Kategori düzenleme ve silme işlemleri yapılacak.
+  const categories = api.category.getCategories.useQuery();
+
+  const { data: categoryData } = categories;
+
   return (
     <>
       <div className="p-4 sm:ml-64">
@@ -54,6 +65,52 @@ const CategoryPage: MyPage = () => {
                   </SheetHeader>
                 </SheetContent>
               </Sheet>
+              <Card className="w-3/3 mt-4 rounded-lg p-0 sm:w-2/3 md:w-2/3">
+                <CardContent>
+                  {categoryData?.map((category) => (
+                    <ul
+                      key={category.id}
+                      className="mt-4 divide-y divide-gray-200 border-b-2 dark:divide-gray-700"
+                    >
+                      <li className="pb-3 sm:pb-4">
+                        <div className="flex items-center space-x-4">
+                          <div className="flex-shrink-0">
+                            <div
+                              style={{ backgroundColor: category.color }}
+                              className="h-7 w-7 rounded-full"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xl font-medium text-gray-900 dark:text-white">
+                              {category.name}
+                            </p>
+                          </div>
+                          <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button variant="purple">DÜZENLE</Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-80">
+                                <div className="grid gap-4">
+                                  <div className="space-y-2">
+                                    <h4 className="font-medium leading-none">
+                                      {category.name}
+                                    </h4>
+                                  </div>
+                                  <UpdateCategoryForm category={category} />
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          </div>
+                          <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                            SİL
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  ))}
+                </CardContent>
+              </Card>
             </>
           </CardContent>
         </Card>

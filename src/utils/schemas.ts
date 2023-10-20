@@ -5,8 +5,8 @@ export const AddTodoFormSchema = z.object({
     .string({
       required_error: "Başlık gereklidir.",
     })
-    .min(3, {
-      message: "Başlık en az 3 karakter olmalıdır.",
+    .min(2, {
+      message: "Başlık en az 2 karakter olmalıdır.",
     }),
   content: z.string().optional(),
   category: z.string().optional(),
@@ -42,11 +42,23 @@ export const UpdateTodoSchema = z.object({
     .string({
       required_error: "Başlık gereklidir.",
     })
-    .min(3, {
-      message: "Başlık en az 3 karakter olmalıdır.",
+    .min(2, {
+      message: "Başlık en az 2 karakter olmalıdır.",
     }),
   content: z.string().optional(),
   category: z.string().optional(),
   tag: z.string().optional(),
   dueDate: z.date().optional(),
+});
+
+export const UpdateCategorySchema = z.object({
+  id: z.string(),
+  name: z
+    .string({
+      required_error: "Başlık gereklidir.",
+    })
+    .min(2, {
+      message: "Kategori adı en az 2 karakter olmalıdır.",
+    }),
+  color: z.string().optional(),
 });
